@@ -50,7 +50,7 @@ jobs:
           pnpm build
 
       - name: Build solution
-        run: msbuild pengu-loader.sln /t:restore,build /m /p:Configuration=Release /p:Platform=x64
+        run: msbuild pengu-loader.sln /t:restore,build /m /p:Configuration=Release /p:Platform=x86
 
       - name: Upload build outputs
         uses: actions/upload-artifact@v3

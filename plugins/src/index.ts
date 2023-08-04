@@ -1,2 +1,2 @@
 import './preload';
-import './views';
+// import './views';
