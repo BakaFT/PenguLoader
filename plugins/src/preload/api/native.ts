@@ -11,6 +11,7 @@ interface Native {
   SaveDataStore: (data: string) => void;
 
   ReadFile: (path:string) => string | undefined;
+  WriteFile: (path:string, content: string, enableAppendMode:boolean) => boolean;
 
   CreateAuthCallbackURL: () => string;
   AddAuthCallback: (url: string, cb: Function) => void;
