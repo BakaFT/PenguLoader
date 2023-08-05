@@ -66,6 +66,35 @@ static vec<wstr> ReadFile(wstr path)
     return lines;
 }
 
+static bool WriteFile(wstr path, wstr *content,bool enableAppendMode)
+{
+    std::wfstream outputStream;
+    if (enableAppendMode) {
+        outputStream.open(path, std::ios::out | std::ios::app);
+    }
+    else {
+        outputStream.open(path, std::ios::out);
+    }
+
+    if (!outputStream.good())
+    {
+        return false;
+    }
+
+    StreamGuard<std::wfstream> guard(outputStream);
+
+    std::locale utf8_locale = std::locale("en_US.UTF-8");
+    outputStream.imbue(utf8_locale);
+    
+    outputStream << *content;
+    if (outputStream.fail() || outputStream.bad())
+    {
+        return false; 
+    }
+
+    return true;
+}
+
 V8Value* native_ReadFile(const vec<V8Value*>& args)
 {
     wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
@@ -80,4 +109,16 @@ V8Value* native_ReadFile(const vec<V8Value*>& args)
         return V8Value::string(&content_cef_string);
 	}
     return V8Value::undefined();
+}
+
+V8Value* native_WriteFile(const vec<V8Value*>& args)
+{
+    wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
+    wstr content = args[1]->asString()->str;
+    bool enableAppMode = args[2]->asBool();
+
+    if (WriteFile(destPath, &content, enableAppMode)) {
+        return V8Value::boolean(true);
+    }
+    return V8Value::boolean(false);
 }

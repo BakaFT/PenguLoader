@@ -36,6 +36,8 @@ interface Effect {
 interface Fs {
   readFile: (path: string) => string | undefined
   readFileAsync: (path: string) => Promise<string | undefined>
+  writeFile: (path: string, content: string, enableAppendMode: boolean) => boolean
+  writeFileAsync: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
 }
 
 // globals
