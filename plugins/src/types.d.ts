@@ -33,6 +33,11 @@ interface Effect {
   clear: () => void
 }
 
+interface Fs {
+  readFile: (path: string) => string | undefined
+  readFileAsync: (path: string) => Promise<string | undefined>
+}
+
 // globals
 
 namespace Pengu {
@@ -44,6 +49,7 @@ namespace Pengu {
 // declare const AuthCallback: AuthCallback;
 declare const DataStore: DataStore;
 declare const Effect: Effect;
+declare const Fs: Fs;
 
 declare const openDevTools: (remote?: boolean) => void;
 declare const openAssetsFolder: () => void;
@@ -58,6 +64,7 @@ declare interface Window {
   // AuthCallback: AuthCallback;
   DataStore: DataStore;
   Effect: Effect;
+  Fs:Fs;
 
   openDevTools: typeof openDevTools;
   openAssetsFolder: typeof openAssetsFolder;
