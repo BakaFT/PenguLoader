@@ -105,6 +105,10 @@ V8Value* native_ReadFile(const vec<V8Value*>& args)
 		{   
             content += line + L"\n";
 		}
+        if (!content.empty())
+        {
+            content.erase(content.size() - 1);
+        }
         CefStr content_cef_string{ content };
         return V8Value::string(&content_cef_string);
 	}
