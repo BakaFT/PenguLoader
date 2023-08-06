@@ -16,9 +16,8 @@ window.Fs = {
             const pluginName = match ? match[1] : null;
 
             const result = native.ReadFile(pluginName + "/" + path);
-            if (typeof result === 'string') {
-                resolve(result);
-            }
+            resolve(result);
+
         });
     },
     writeFile(path: string, content: string, enableAppendMode: boolean) {
@@ -35,9 +34,7 @@ window.Fs = {
             const pluginName = match ? match[1] : null;
 
             const result = native.WriteFile(pluginName + "/" + path, content, enableAppendMode);
-            if (typeof result === 'boolean') {
-                resolve(result);
-            }
+            resolve(result);
         });
     }
 };
