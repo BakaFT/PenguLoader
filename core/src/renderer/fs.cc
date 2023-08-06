@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <locale>
+#include <filesystem>
 
 template <typename T>
 class StreamGuard
@@ -68,6 +69,15 @@ static vec<wstr> ReadFile(wstr path)
 
 static bool WriteFile(wstr path, wstr *content,bool enableAppendMode)
 {
+    std::filesystem::path filePath(path);
+    std::filesystem::path parentPath = filePath.parent_path();
+
+    if (!std::filesystem::exists(parentPath)) {
+        if (!std::filesystem::create_directories(parentPath)) {
+            return false;
+        }
+    }
+
     std::wfstream outputStream;
     if (enableAppendMode) {
         outputStream.open(path, std::ios::out | std::ios::app);
