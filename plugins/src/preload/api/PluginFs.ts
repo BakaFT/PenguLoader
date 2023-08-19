@@ -14,5 +14,12 @@ window.PluginFs = {
             const result = native.WriteFile(pluginName + "/" + path, content, enableAppendMode);
             resolve(result);
         });
+    },
+    mkdir(path: string) {
+        return new Promise<boolean>((resolve) => {
+            const pluginName = getScriptPath()?.match(/\/([^/]+)\/index\.js$/)?.[1]
+            const result = native.MkDir(pluginName + "/" + path);
+            resolve(result);
+        });
     }
 };

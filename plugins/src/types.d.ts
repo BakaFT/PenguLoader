@@ -36,6 +36,7 @@ interface Effect {
 interface PluginFs {
   read: (path: string) => Promise<string | undefined>
   write: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
+  mkdir: (path: string) => Promise<boolean>
 }
 
 // globals
