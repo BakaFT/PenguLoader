@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <locale>
+#include <filesystem>
 
 namespace PluginFS {
     template <typename T>
@@ -75,6 +76,23 @@ namespace PluginFS {
         return true;
     }
 
+    static bool MkDir(wstr path)
+	{
+        std::filesystem::path filePath(path);
+
+        if (std::filesystem::is_directory(filePath)) {
+            return false;
+        }
+
+        std::filesystem::path parentPath = filePath.parent_path();
+
+        if (!std::filesystem::exists(parentPath)) {
+            if (!std::filesystem::create_directories(parentPath)) {
+                return false;
+            }
+        }
+        return true;
+	}
 }
 
 V8Value* native_ReadFile(const vec<V8Value*>& args)
@@ -107,4 +125,13 @@ V8Value* native_WriteFile(const vec<V8Value*>& args)
         return V8Value::boolean(true);
     }
     return V8Value::boolean(false);
+}
+
+V8Value* native_MkDir(const vec<V8Value*>& args)
+{
+	wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
+	if (PluginFS::MkDir(destPath)) {
+		return V8Value::boolean(true);
+	}
+	return V8Value::boolean(false);
 }
