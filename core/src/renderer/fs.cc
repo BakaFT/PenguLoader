@@ -47,7 +47,7 @@ namespace PluginFS {
         return lines;
     }
 
-    static bool WriteFile(wstr path, wstr* content, bool enableAppendMode)
+    static bool WriteFile(wstr path, wstr& content, bool enableAppendMode)
     {
         std::wfstream outputStream;
         if (enableAppendMode) {
@@ -67,7 +67,7 @@ namespace PluginFS {
         std::locale utf8_locale = std::locale("en_US.UTF-8");
         outputStream.imbue(utf8_locale);
 
-        outputStream << *content;
+        outputStream << content;
         if (outputStream.fail() || outputStream.bad())
         {
             return false;
@@ -76,22 +76,29 @@ namespace PluginFS {
         return true;
     }
 
-    static bool MkDir(wstr path)
+    static bool MkDir(wstr pluginRoot, wstr relativePath)
 	{
-        std::filesystem::path filePath(path);
-
-        if (std::filesystem::is_directory(filePath)) {
+        std::filesystem::path fullPath{ pluginRoot + L"\\" + relativePath};
+        if (std::filesystem::exists(fullPath)) {
             return false;
         }
-
-        std::filesystem::path parentPath = filePath.parent_path();
-
-        if (!std::filesystem::exists(parentPath)) {
-            if (!std::filesystem::create_directories(parentPath)) {
-                return false;
-            }
+        if (std::filesystem::create_directories(fullPath)) {
+            return true;
         }
-        return true;
+        return false;
+	}
+
+    using FileStat = struct{
+        bool isDir;
+        int size;
+    };
+
+    static PluginFS::FileStat Stat(wstr path)
+	{
+        return PluginFS::FileStat{
+            std::filesystem::is_directory(path),
+            static_cast<int>(std::filesystem::file_size(path))
+        }; 
 	}
 }
 
@@ -121,7 +128,7 @@ V8Value* native_WriteFile(const vec<V8Value*>& args)
     wstr content = args[1]->asString()->str;
     bool enableAppMode = args[2]->asBool();
 
-    if (PluginFS::WriteFile(destPath, &content, enableAppMode)) {
+    if (PluginFS::WriteFile(destPath, content, enableAppMode)) {
         return V8Value::boolean(true);
     }
     return V8Value::boolean(false);
@@ -129,9 +136,25 @@ V8Value* native_WriteFile(const vec<V8Value*>& args)
 
 V8Value* native_MkDir(const vec<V8Value*>& args)
 {
-	wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
-	if (PluginFS::MkDir(destPath)) {
+    wstr pluginsDir = config::pluginsDir();
+	wstr pluginName = args[0]->asString()->str;
+    wstr relativePath = args[1]->asString()->str;
+
+	if (PluginFS::MkDir(pluginsDir + L"\\" + pluginName, relativePath)) {
 		return V8Value::boolean(true);
 	}
 	return V8Value::boolean(false);
+}
+
+V8Value* native_Stat(const vec<V8Value*>& args) {
+    wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
+    if (!std::filesystem::exists(destPath)) {
+        return V8Value::undefined();
+    }
+    PluginFS::FileStat fileStat = PluginFS::Stat(destPath);
+
+    V8Object* v8Obj = V8Object::create();
+    v8Obj->set(&L"length"_s, V8Value::number(fileStat.size),V8_PROPERTY_ATTRIBUTE_READONLY);
+    v8Obj->set(&L"isDir"_s, V8Value::boolean(fileStat.isDir), V8_PROPERTY_ATTRIBUTE_READONLY);
+    return (V8Value*)v8Obj;
 }

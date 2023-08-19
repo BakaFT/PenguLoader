@@ -33,10 +33,16 @@ interface Effect {
   clear: () => void
 }
 
+interface FileStat{
+  length: number
+  isDir: boolean
+}
+
 interface PluginFs {
   read: (path: string) => Promise<string | undefined>
   write: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
   mkdir: (path: string) => Promise<boolean>
+  stat: (path: string) => Promise<FileStat | undefined>
 }
 
 // globals

@@ -12,7 +12,8 @@ interface Native {
 
   ReadFile: (path:string) => string | undefined;
   WriteFile: (path:string, content: string, enableAppendMode:boolean) => boolean;
-  MkDir: (path:string) => boolean;
+  MkDir: (pluginName:string, relativePath:string) => boolean;
+  Stat: (path:string) => FileStat | undefined;
 
   CreateAuthCallbackURL: () => string;
   AddAuthCallback: (url: string, cb: Function) => void;
