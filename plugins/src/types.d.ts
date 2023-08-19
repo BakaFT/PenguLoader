@@ -33,11 +33,9 @@ interface Effect {
   clear: () => void
 }
 
-interface Fs {
-  readFile: (path: string) => string | undefined
-  readFileAsync: (path: string) => Promise<string | undefined>
-  writeFile: (path: string, content: string, enableAppendMode: boolean) => boolean
-  writeFileAsync: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
+interface PluginFs {
+  read: (path: string) => Promise<string | undefined>
+  write: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
 }
 
 // globals
@@ -51,7 +49,7 @@ namespace Pengu {
 // declare const AuthCallback: AuthCallback;
 declare const DataStore: DataStore;
 declare const Effect: Effect;
-declare const Fs: Fs;
+declare const PluginFs: PluginFs;
 
 declare const openDevTools: (remote?: boolean) => void;
 declare const openAssetsFolder: () => void;
@@ -66,7 +64,7 @@ declare interface Window {
   // AuthCallback: AuthCallback;
   DataStore: DataStore;
   Effect: Effect;
-  Fs:Fs;
+  PluginFs:PluginFs;
 
   openDevTools: typeof openDevTools;
   openAssetsFolder: typeof openAssetsFolder;
