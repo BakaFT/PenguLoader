@@ -144,7 +144,7 @@ namespace PluginFS {
 V8Value* native_ReadFile(const vec<V8Value*>& args)
 {
     wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
-    if (utils::isFile(destPath)) {
+    if (std::filesystem::is_regular_file(destPath)) {
         vec<wstr> lines = PluginFS::ReadFile(destPath);
         wstr content;
         for (wstr line : lines)
