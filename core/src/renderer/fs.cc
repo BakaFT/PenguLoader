@@ -51,7 +51,7 @@ namespace PluginFS {
             lines.push_back(line);
         }
 
-        return lines;
+        return std::move(lines);
     }
 
     static bool WriteFile(wstr path, wstr& content, bool enableAppendMode)
@@ -132,7 +132,7 @@ namespace PluginFS {
                 static_cast<int>(entry.file_size())
                 });
         }
-        return fileStats;
+        return std::move(fileStats);
     }
 
     static int RemoveFile(wstr path, bool recursively) {
@@ -174,7 +174,7 @@ V8Value* native_WriteFile(const vec<V8Value*>& args)
     wstr content = args[1]->asString()->str;
     bool enableAppMode = args[2]->asBool();
 
-    if (PluginFS::WriteFile(destPath, content, enableAppMode)) {
+    if (PluginFS::WriteFile(destPath, std::move(content), enableAppMode)) {
         return V8Value::boolean(true);
     }
     return V8Value::boolean(false);
