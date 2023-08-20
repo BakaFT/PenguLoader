@@ -22,6 +22,13 @@ namespace PluginFS {
         T& stream_;
     };
 
+    static void removeTailingSlash(wstr& path) {
+		if (!path.empty() && path.back() == L'/')
+		{
+			path.pop_back();
+		}
+	}
+
     static vec<wstr> ReadFile(wstr path)
     {
         std::wfstream inputStream;
@@ -78,6 +85,7 @@ namespace PluginFS {
 
     static bool MkDir(wstr pluginRoot, wstr relativePath)
 	{
+        PluginFS::removeTailingSlash(relativePath);
         std::filesystem::path fullPath{ pluginRoot + L"\\" + relativePath};
         if (std::filesystem::exists(fullPath)) {
             return false;
@@ -89,17 +97,26 @@ namespace PluginFS {
 	}
 
     using FileStat = struct{
+        wstr fileName;
+        bool isFile;
         bool isDir;
         int size;
     };
 
     static PluginFS::FileStat Stat(wstr path)
 	{
+        PluginFS::removeTailingSlash(path);
+        std::filesystem::path f{ path };
+        auto entry = std::filesystem::directory_entry(path);
+
         return PluginFS::FileStat{
-            std::filesystem::is_directory(path),
-            static_cast<int>(std::filesystem::file_size(path))
+            entry.is_regular_file() ? entry.path().filename().wstring() : entry.path().stem(),
+            entry.is_regular_file(),
+            entry.is_directory(),
+            static_cast<int>(entry.file_size())
         }; 
 	}
+
 }
 
 V8Value* native_ReadFile(const vec<V8Value*>& args)
@@ -156,5 +173,8 @@ V8Value* native_Stat(const vec<V8Value*>& args) {
     V8Object* v8Obj = V8Object::create();
     v8Obj->set(&L"length"_s, V8Value::number(fileStat.size),V8_PROPERTY_ATTRIBUTE_READONLY);
     v8Obj->set(&L"isDir"_s, V8Value::boolean(fileStat.isDir), V8_PROPERTY_ATTRIBUTE_READONLY);
+    v8Obj->set(&L"isFile"_s, V8Value::boolean(fileStat.isFile), V8_PROPERTY_ATTRIBUTE_READONLY);
+    v8Obj->set(&L"fileName"_s, V8Value::string(&CefStr{ fileStat.fileName }), V8_PROPERTY_ATTRIBUTE_READONLY);
+
     return (V8Value*)v8Obj;
 }
