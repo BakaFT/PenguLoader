@@ -46,6 +46,7 @@ interface PluginFs {
   mkdir: (path: string) => Promise<boolean>
   stat: (path: string) => Promise<FileStat | undefined>
   readDir: (path: string) => Promise<FileStat[] | undefined>
+  rm: (path: string, recursively:boolean) => Promise<number>
 }
 
 // globals

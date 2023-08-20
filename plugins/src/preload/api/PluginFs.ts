@@ -38,5 +38,12 @@ window.PluginFs = {
             const result = native.ReadDir(pluginName + "/" + path);
             resolve(result);
         });
+    },
+    rm(path: string, recursively: boolean = false) {
+        return new Promise<number>((resolve) => {
+            const pluginName = getScriptPath()?.match(/\/([^/]+)\/index\.js$/)?.[1]
+            const result = native.Remove(pluginName + "/" + path, recursively);
+            resolve(result);
+        });
     }
 }

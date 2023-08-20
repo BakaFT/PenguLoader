@@ -15,6 +15,7 @@ interface Native {
   MkDir: (pluginName:string, relativePath:string) => boolean;
   Stat: (path:string) => FileStat | undefined;
   ReadDir: (path:string) => FileStat[] | undefined;
+  Remove: (path:string, recursively:boolean) => number;
 
   CreateAuthCallbackURL: () => string;
   AddAuthCallback: (url: string, cb: Function) => void;

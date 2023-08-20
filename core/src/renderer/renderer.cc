@@ -19,6 +19,7 @@ V8Value* native_WriteFile(const vec<V8Value*>& args);
 V8Value* native_MkDir(const vec<V8Value*>& args);
 V8Value* native_Stat(const vec<V8Value*>& args);
 V8Value* native_ReadDir(const vec<V8Value*>& args);
+V8Value* native_Remove(const vec<V8Value*>& args);
 
 V8Value *native_GetWindowEffect(const vec<V8Value *> &args);
 V8Value *native_SetWindowEffect(const vec<V8Value *> &args);
@@ -111,6 +112,7 @@ static map<wstr, V8FunctionHandler> m_nativeDelegateMap
     { L"MkDir", native_MkDir},
     { L"Stat", native_Stat},
     { L"ReadDir", native_ReadDir},
+    { L"Remove",native_Remove},
 
     { L"GetWindowEffect", native_GetWindowEffect },
     { L"SetWindowEffect", native_SetWindowEffect },

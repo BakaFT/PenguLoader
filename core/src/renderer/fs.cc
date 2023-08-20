@@ -23,11 +23,11 @@ namespace PluginFS {
     };
 
     static void removeTailingSlash(wstr& path) {
-		if (!path.empty() && path.back() == L'/')
-		{
-			path.pop_back();
-		}
-	}
+        if (!path.empty() && path.back() == L'/')
+        {
+            path.pop_back();
+        }
+    }
 
     static vec<wstr> ReadFile(wstr path)
     {
@@ -84,9 +84,9 @@ namespace PluginFS {
     }
 
     static bool MkDir(wstr pluginRoot, wstr relativePath)
-	{
+    {
         PluginFS::removeTailingSlash(relativePath);
-        std::filesystem::path fullPath{ pluginRoot + L"\\" + relativePath};
+        std::filesystem::path fullPath{ pluginRoot + L"\\" + relativePath };
         if (std::filesystem::exists(fullPath)) {
             return false;
         }
@@ -94,9 +94,9 @@ namespace PluginFS {
             return true;
         }
         return false;
-	}
+    }
 
-    using FileStat = struct{
+    using FileStat = struct {
         wstr fileName;
         bool isFile;
         bool isDir;
@@ -104,7 +104,7 @@ namespace PluginFS {
     };
 
     static PluginFS::FileStat Stat(wstr path)
-	{
+    {
         PluginFS::removeTailingSlash(path);
         auto entry = std::filesystem::directory_entry(path);
 
@@ -113,28 +113,39 @@ namespace PluginFS {
             entry.is_regular_file(),
             entry.is_directory(),
             static_cast<int>(entry.file_size())
-        }; 
-	}
+        };
+    }
 
     static vec<PluginFS::FileStat> ReadDir(wstr path) {
         PluginFS::removeTailingSlash(path);
 
-		vec<PluginFS::FileStat> fileStats;
-		for (const auto& entry : std::filesystem::directory_iterator(path)) {
+        vec<PluginFS::FileStat> fileStats;
+        for (const auto& entry : std::filesystem::directory_iterator(path)) {
             wstr enryPathWstr = entry.path().wstring();
             PluginFS::removeTailingSlash(enryPathWstr);
             std::filesystem::path entryPath{ enryPathWstr };
 
-			fileStats.push_back(PluginFS::FileStat{
-				entry.is_regular_file() ? entryPath.filename().wstring() : entryPath.stem(),
-				entry.is_regular_file(),
-				entry.is_directory(),
-				static_cast<int>(entry.file_size())
-				});
-		}
-		return fileStats;
+            fileStats.push_back(PluginFS::FileStat{
+                entry.is_regular_file() ? entryPath.filename().wstring() : entryPath.stem(),
+                entry.is_regular_file(),
+                entry.is_directory(),
+                static_cast<int>(entry.file_size())
+                });
+        }
+        return fileStats;
     }
 
+    static int RemoveFile(wstr path, bool recursively) {
+        PluginFS::removeTailingSlash(path);
+
+        auto isDir = std::filesystem::is_directory(path);
+        if (recursively && isDir) {
+            return static_cast<int>(std::filesystem::remove_all(path)); 
+        }
+        else {
+            return std::filesystem::remove(path);
+        }
+    }
 }
 
 V8Value* native_ReadFile(const vec<V8Value*>& args)
@@ -205,7 +216,7 @@ V8Value* native_ReadDir(const vec<V8Value*>& args) {
 	vec<PluginFS::FileStat> fileStats = PluginFS::ReadDir(destPath);
 
 	V8Array* v8Array = V8Array::create(fileStats.size());
-    for (int i = 0; i < fileStats.size(); i++)
+    for (size_t i = 0; i < fileStats.size(); i++)
 	{
 		PluginFS::FileStat fileStat = fileStats[i];
 		V8Object* v8Obj = V8Object::create();
@@ -217,4 +228,12 @@ V8Value* native_ReadDir(const vec<V8Value*>& args) {
 	}
 
 	return (V8Value*)v8Array;
+}
+
+V8Value* native_Remove(const vec<V8Value*>& args) {
+	wstr destPath = config::pluginsDir() + L"\\" + args[0]->asString()->str;
+	bool recursively = args[1]->asBool();
+
+    int ret = PluginFS::RemoveFile(destPath, recursively);
+    return V8Value::number(ret);
 }
