@@ -98,7 +98,6 @@ namespace PluginFS {
 
     using FileStat = struct {
         wstr fileName;
-        bool isFile;
         bool isDir;
         int size;
     };
@@ -110,7 +109,6 @@ namespace PluginFS {
 
         return PluginFS::FileStat{
             entry.is_regular_file() ? entry.path().filename().wstring() : entry.path().stem(),
-            entry.is_regular_file(),
             entry.is_directory(),
             static_cast<int>(entry.file_size())
         };
@@ -127,7 +125,6 @@ namespace PluginFS {
 
             fileStats.push_back(PluginFS::FileStat{
                 entry.is_regular_file() ? entryPath.filename().wstring() : entryPath.stem(),
-                entry.is_regular_file(),
                 entry.is_directory(),
                 static_cast<int>(entry.file_size())
                 });

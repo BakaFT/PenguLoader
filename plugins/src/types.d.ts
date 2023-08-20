@@ -36,7 +36,6 @@ interface Effect {
 interface FileStat{
   fileName: string
   length: number
-  isFile: boolean
   isDir: boolean
 }
 
