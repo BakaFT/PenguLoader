@@ -40,7 +40,7 @@ interface FileStat{
   isDir: boolean
 }
 
-interface PluginFs {
+interface PluginFS {
   read: (path: string) => Promise<string | undefined>
   write: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
   mkdir: (path: string) => Promise<boolean>
@@ -60,7 +60,7 @@ namespace Pengu {
 // declare const AuthCallback: AuthCallback;
 declare const DataStore: DataStore;
 declare const Effect: Effect;
-declare const PluginFs: PluginFs;
+declare const PluginFS: PluginFS;
 
 declare const openDevTools: (remote?: boolean) => void;
 declare const openAssetsFolder: () => void;
@@ -75,7 +75,7 @@ declare interface Window {
   // AuthCallback: AuthCallback;
   DataStore: DataStore;
   Effect: Effect;
-  PluginFs:PluginFs;
+  PluginFS:PluginFS;
 
   openDevTools: typeof openDevTools;
   openAssetsFolder: typeof openAssetsFolder;

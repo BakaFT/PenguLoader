@@ -1,6 +1,6 @@
 import native from './native';
 
-window.PluginFs = {
+window.PluginFS = {
     read(path: string) {
         return new Promise<string | undefined>((resolve) => {
             const pluginName = getScriptPath()?.match(/\/([^/]+)\/index\.js$/)?.[1]
@@ -13,7 +13,7 @@ window.PluginFs = {
             const pluginName = getScriptPath()?.match(/\/([^/]+)\/index\.js$/)?.[1]
             const result = native.WriteFile(pluginName + "/" + path, content, enableAppendMode);
             if(!result){
-                console.log("PluginFS.write failed. Please ask the plugin developer for help.")
+                console.log(`PluginFS.write failed on ${path}. Please ask the plugin developer for help.`)
             }
             resolve(result);
         });
