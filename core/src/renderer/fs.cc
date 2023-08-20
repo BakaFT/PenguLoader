@@ -114,22 +114,18 @@ namespace PluginFS {
         };
     }
 
-    static vec<PluginFS::FileStat> ReadDir(wstr path) {
+    static vec<wstr> ReadDir(wstr path) {
         PluginFS::removeTailingSlash(path);
 
-        vec<PluginFS::FileStat> fileStats;
+        vec<wstr> fileNames;
         for (const auto& entry : std::filesystem::directory_iterator(path)) {
             wstr enryPathWstr = entry.path().wstring();
             PluginFS::removeTailingSlash(enryPathWstr);
             std::filesystem::path entryPath{ enryPathWstr };
 
-            fileStats.push_back(PluginFS::FileStat{
-                entry.is_regular_file() ? entryPath.filename().wstring() : entryPath.stem(),
-                entry.is_directory(),
-                static_cast<int>(entry.file_size())
-                });
+            fileNames.push_back(entry.is_regular_file() ? entryPath.filename().wstring() : entryPath.stem());
         }
-        return std::move(fileStats);
+        return std::move(fileNames);
     }
 
     static int RemoveFile(wstr path, bool recursively) {
@@ -210,20 +206,15 @@ V8Value* native_ReadDir(const vec<V8Value*>& args) {
 	if (!std::filesystem::exists(destPath)) {
 		return V8Value::undefined();
 	}
-	vec<PluginFS::FileStat> fileStats = PluginFS::ReadDir(destPath);
+	vec<wstr> fileNames = PluginFS::ReadDir(destPath);
 
-	V8Array* v8Array = V8Array::create(fileStats.size());
-    for (size_t i = 0; i < fileStats.size(); i++)
+	V8Array* v8Array = V8Array::create(fileNames.size());
+    for (size_t i = 0; i < fileNames.size(); i++)
 	{
-		PluginFS::FileStat fileStat = fileStats[i];
-		V8Object* v8Obj = V8Object::create();
-		v8Obj->set(&L"length"_s, V8Value::number(fileStat.size), V8_PROPERTY_ATTRIBUTE_READONLY);
-		v8Obj->set(&L"isDir"_s, V8Value::boolean(fileStat.isDir), V8_PROPERTY_ATTRIBUTE_READONLY);
-		v8Obj->set(&L"isFile"_s, V8Value::boolean(fileStat.isFile), V8_PROPERTY_ATTRIBUTE_READONLY);
-		v8Obj->set(&L"fileName"_s, V8Value::string(&CefStr{ fileStat.fileName }), V8_PROPERTY_ATTRIBUTE_READONLY);
-		v8Array->set(i, v8Obj);
+		wstr fileName = fileNames[i];
+        auto fileNameV8Str = V8Value::string(&CefStr{ fileName });
+		v8Array->set(i, fileNameV8Str);
 	}
-
 	return (V8Value*)v8Array;
 }
 
