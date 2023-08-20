@@ -45,6 +45,7 @@ interface PluginFs {
   write: (path: string, content: string, enableAppendMode: boolean) => Promise<boolean>
   mkdir: (path: string) => Promise<boolean>
   stat: (path: string) => Promise<FileStat | undefined>
+  readDir: (path: string) => Promise<FileStat[] | undefined>
 }
 
 // globals
