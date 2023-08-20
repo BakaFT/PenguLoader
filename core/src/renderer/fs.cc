@@ -195,7 +195,6 @@ V8Value* native_Stat(const vec<V8Value*>& args) {
     V8Object* v8Obj = V8Object::create();
     v8Obj->set(&L"length"_s, V8Value::number(fileStat.size),V8_PROPERTY_ATTRIBUTE_READONLY);
     v8Obj->set(&L"isDir"_s, V8Value::boolean(fileStat.isDir), V8_PROPERTY_ATTRIBUTE_READONLY);
-    v8Obj->set(&L"isFile"_s, V8Value::boolean(fileStat.isFile), V8_PROPERTY_ATTRIBUTE_READONLY);
     v8Obj->set(&L"fileName"_s, V8Value::string(&CefStr{ fileStat.fileName }), V8_PROPERTY_ATTRIBUTE_READONLY);
 
     return (V8Value*)v8Obj;
