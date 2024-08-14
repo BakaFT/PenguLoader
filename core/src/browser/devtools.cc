@@ -157,10 +157,10 @@ void OpenDevTools(cef_browser_t *browser)
     else
     {
         cef_window_info_t wi{};
-        wi.x = CW_USEDEFAULT;
-        wi.y = CW_USEDEFAULT;
-        wi.width = CW_USEDEFAULT;
-        wi.height = CW_USEDEFAULT;
+        wi.bounds.x = CW_USEDEFAULT;
+        wi.bounds.y = CW_USEDEFAULT;
+        wi.bounds.width = CW_USEDEFAULT;
+        wi.bounds.height = CW_USEDEFAULT;
         wi.ex_style = WS_EX_APPWINDOW;
         wi.style = WS_OVERLAPPEDWINDOW
             | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE;
