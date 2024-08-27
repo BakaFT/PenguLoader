@@ -6,11 +6,13 @@ use tauri::{
 
 #[tauri::command]
 fn expand_folder(path: &str) {
-    #[cfg(windows)]
-    Command::new("explorer")
-        .args(["/expand,", path])
+    #[cfg(windows)]{
+        let replaced_path = path.replace("/", "\\");         
+        Command::new("explorer")
+        .args(["/expand,", replaced_path.as_str()])
         .spawn()
         .unwrap();
+    }
 
     #[cfg(target_os = "macos")]
     Command::new("open").arg(path).spawn().unwrap();
