@@ -1,6 +1,7 @@
 import { Component, createMemo, createSignal, For } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { useRoot } from '~/lib/root'
+import { useI18n } from '~/lib/i18n'
 
 import { TabClient } from './Tab.Client'
 import { TabPengu } from './Tab.Pengu'
@@ -14,6 +15,7 @@ const Tabs: Array<[string, any]> = [
 
 export const Settings: Component = () => {
 
+  const i18n = useI18n()
   const { settings } = useRoot()
   const [tabIndex, setTabIndex] = createSignal(0)
 
@@ -35,7 +37,7 @@ export const Settings: Component = () => {
         </span>
 
         <div class="flex flex-col bg-black/10 p-4 w-[210px] py-8">
-          <h1 class="text-neutral-400 text-lg font-bold mx-4">Settings</h1>
+          <h1 class="text-neutral-400 text-lg font-bold mx-4">{i18n.t("settings.title")}</h1>
           <nav class="flex flex-col mt-5 text-neutral-300 space-y-1">
             <For each={Tabs}>
               {([name], index) => (

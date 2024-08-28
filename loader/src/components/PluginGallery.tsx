@@ -4,6 +4,7 @@ import { LoaderIcon, ReloadIcon, StoreIcon } from './Icons'
 import { Checkbox } from './ui'
 import { useConfig } from '~/lib/config'
 import { useRoot } from '~/lib/root'
+import { useI18n } from '~/lib/i18n'
 
 const PluginCard: Component<PluginInfo> = (props) => {
   const [enabled, setEnabled] = createSignal(PluginManager.isEnabled(props.hash))
@@ -36,6 +37,7 @@ const PluginCard: Component<PluginInfo> = (props) => {
 export const PluginGallery: Component = () => {
 
   const config = useConfig()
+  const i18n = useI18n()
   const { setStore } = useRoot()
 
   const [loading, setLoading] = createSignal(false)
@@ -71,15 +73,15 @@ export const PluginGallery: Component = () => {
         <Match when={loading()}>
           <div class="text-accent-foreground m-auto flex flex-col items-center justify-center gap-2 h-full">
             <LoaderIcon class="animate-spin" />
-            <p>Loading...</p>
+            <p>{i18n.t('gallery.loading')}</p>
           </div>
         </Match>
         <Match when={!loading()}>
           <div class="grid p-4">
-            <h1 class="text-foreground/80 text-sm">Installed plugins ({plugins().length})</h1>
+            <h1 class="text-foreground/80 text-sm">{i18n.t('gallery.installed_plugins')} ({plugins().length})</h1>
             <Show
               when={plugins().length > 0}
-              fallback={<h3 class="text-center my-8 w-full">You have no plugins!</h3>}
+              fallback={<h3 class="text-center my-8 w-full">{i18n.t('gallery.no_plugins')}</h3>}
             >
               <div class="grid grid-cols-3 gap-x-4 my-4 gap-y-6">
                 <For each={plugins()}>
@@ -89,32 +91,32 @@ export const PluginGallery: Component = () => {
             </Show>
             <div class="flex justify-evenly items-center w-full py-8">
               <div class="flex flex-col items-center space-y-4">
-                <p class="text-sm text-secondary-foreground/70">Don't see your plugins?</p>
+                <p class="text-sm text-secondary-foreground/70">{i18n.t('gallery.dont_see_plugins')}</p>
                 <div class="flex gap-1">
                   <button
                     class="inline-flex gap-1 items-center text-sm border border-foreground/10 rounded-sm px-3 py-1 hover:bg-foreground hover:text-background"
                     tabIndex={-1}
                     onClick={reload}
                   >
-                    <ReloadIcon size={14} /> Reload
+                    <ReloadIcon size={14} /> {i18n.t('gallery.reload')}
                   </button>
                   <button
                     class="inline-flex gap-1 items-center text-sm border border-foreground/10 rounded-sm px-3 py-1 hover:bg-foreground hover:text-background"
                     tabIndex={-1}
                     onClick={revealPlugins}
                   >
-                    Open folder
+                  {i18n.t('gallery.open_folder')}
                   </button>
                 </div>
               </div>
               <div class="flex flex-col items-center space-y-4">
-                <p class="text-sm text-secondary-foreground/70">More plugins?</p>
+                <p class="text-sm text-secondary-foreground/70">{i18n.t('gallery.more_plugins')}</p>
                 <button
                   class="inline-flex gap-1 items-center text-sm border border-foreground/10 rounded-sm px-3 py-1 hover:bg-foreground hover:text-background"
                   tabIndex={-1}
                   onClick={() => setStore(true)}
                 >
-                  <StoreIcon size={14} /> Get in Store
+                  <StoreIcon size={14} /> {i18n.t('gallery.get_in_store')}
                 </button>
               </div>
             </div>

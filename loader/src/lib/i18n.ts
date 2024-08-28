@@ -4,8 +4,17 @@ import translations from '../../translations.json'
 import { useConfig } from './config'
 
 const EN = translations.languages[0]
-type TranslationKey = keyof typeof EN.translations
-type TranslationMap = Record<TranslationKey, string>
+
+// @ts-ignore
+type NestedTranslationKey<T> = {
+  [K in keyof T]: T[K] extends object
+  ? `${string & K}.${NestedTranslationKey<T[K]>}`
+  : `${string & K}`
+}[keyof T]
+
+type PenguTranslationKey = NestedTranslationKey<typeof EN.translations>
+
+type TranslationMap = Record<string, any>
 
 const _i18n = createRoot(() => {
   const [current, set] = createStore<TranslationMap>({ ...EN.translations })
@@ -23,11 +32,19 @@ const _i18n = createRoot(() => {
     }
   }
 
-  const text = (key: TranslationKey): string => {
-    if (key in current) {
-      return current[key]
+
+  const text = (key: PenguTranslationKey): string => {
+    const keys = key.split('.')
+    let value: any = current
+
+    for (const k of keys) {
+      value = value[k]
+      if (value === undefined) {
+        return `{{${key}}}`
+      }
     }
-    return `{{${key}}}`
+
+    return typeof value === 'string' ? value : `{{${key}}}`
   }
 
   return {

@@ -3,9 +3,11 @@ import { Dynamic } from 'solid-js/web'
 import { CoreModule } from '../lib/core-module'
 import { dialog, event } from '@tauri-apps/api'
 import { BoltIcon, PowerIcon } from './Icons'
+import { useI18n } from '../lib/i18n'
 
 export const Activator: Component = () => {
 
+  const i18n = useI18n()
   const [loading, setLoading] = createSignal(true)
   const [active, setActive] = createSignal(false)
 
@@ -15,12 +17,12 @@ export const Activator: Component = () => {
 
       try {
         if (!await CoreModule.checkLeagueDir()) {
-          await dialog.message('Please select a valid LoL Client folder in Settings.', { type: 'warning' })
+          await dialog.message(i18n.t("activator.invalid_path"), { type: 'warning' })
           return
         }
 
         if (!await CoreModule.exists()) {
-          await dialog.message('Failed to perform activation, the core module is not found.', { type: 'warning' })
+          await dialog.message(i18n.t('activator.module_not_found'), { type: 'warning' })
           return
         }
 
@@ -28,7 +30,7 @@ export const Activator: Component = () => {
         const { activated, error } = await CoreModule.doActivate(nextActive)
 
         if (error) {
-          await dialog.message(`Failed to perform activation, got error:\n${error}`, { type: 'warning' })
+          await dialog.message(i18n.t('activator.error_occur') + `:\n${error}`, { type: 'warning' })
         } else if (activated === nextActive) {
           setActive(activated)
         }
@@ -73,7 +75,7 @@ export const Activator: Component = () => {
         <div
           class="flex-1 px-6 text-lg text-center font-semibold text-primary aria-checked:text-muted"
           aria-checked={active()}
-        >{active() ? 'READY' : 'Activate'}</div>
+        >{active() ? i18n.t('activator.ready') : i18n.t('activator.activate')}</div>
       </div>
     </div>
   )

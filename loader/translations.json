@@ -4,22 +4,252 @@
       "id": "en",
       "name": "English",
       "translations": {
-        "welcome": "Welcome",
-        "choose_lang": "Choose your language",
-        "accept_tos": "Accept terms and conditions",
-        "tos_content": "Pengu Loader is SAFE, but using exploit plugins could get you banned.",
-        "get_started": "Get Started"
+        "welcome": {
+          "welcome": "Welcome",
+          "choose_lang": "Choose your language",
+          "accept_tos": "Accept terms and conditions",
+          "tos_content": "Pengu Loader is SAFE, but using exploit plugins could get you banned.",
+          "get_started": "Get Started"
+        },
+        "gallery": {
+          "loading": "Loading...",
+          "reload": "Reload",
+          "installed_plugins": "Installed plugins",
+          "no_plugins": "No plugins installed",
+          "dont_see_plugins": "Don't see your plugins?",
+          "open_folder": "Open Folder",
+          "more_plugins": "More plugins?",
+          "get_in_store": "Get in Store"
+        },
+        "activator": {
+          "activate": "Activate",
+          "ready": "Ready",
+          "invalid_path": "Please select a valid LoL Client folder in Settings.",
+          "module_not_found": "Failed to perform activation, the core module is not found.",
+          "error_occur": "Failed to perform activation, got error"
+        },
+        "store": {
+          "soon": "Plugin Store is coming soon!",
+          "go_back": "Go back"
+        },
+        "settings": {
+          "title": "Settings",
+          "tabs": {
+            "pengu": "Pengu Loader",
+            "lc": "Leauge Client",
+            "about": "About"
+          },
+          "pengu": {
+            "launch_settings_title": "Launch Settings",
+            "launch_settings_caption": "Run on startup",
+            "launch_settings_message": "Automatically run Pengu when your computer starts.",
+            "plugins_folder_title": "Plugins Folder",
+            "client_location_title": "LoL Client Location",
+            "client_location_invalid": "Your selected path is not valid.",
+            "client_location_not_selected": "(not selected)",
+            "activation_mode_title": "Activation Mode",
+            "deactivate_message": "Please deactivate Pengu before changing the activation mode.",
+            "activation_mode_universal_caption": "Universal",
+            "activation_mode_universal_message": "Apply to all League Clients, including live and PBE",
+            "activation_mode_targeted_caption": "Targeted",
+            "activation_mode_targeted_message": "Apply to a specific League Client to avoid UnauthorizedAccess issue on some Windows.",
+            "activation_mode_ondemand_caption": "On-Demand",
+            "activation_mode_ondemand_message": "Apply to a specific League Client that you launch from the Riot Client. You have to keep Pengu running in background."
+          },
+          "leagueclient": {
+            "restart_to_take_effect": "*These options work within the Client, restart it to take effect.",
+            "hotkeys_title": "Hot Keys",
+            "hotkeys_caption": "Enable hot keys",
+            "hotkeys_message": "Allow Pengu to catch these hot keys when you press in the Client to perform functions below.",
+            "hotkeys_reload_the_client": "Reload the Client",
+            "hotkeys_restart_the_ux": "Reload the UX",
+            "hotkey_open_chrome_devtools": "Open Chrome DevTools",
+            "tweaks_title": "Tweaks",
+            "optimized_client_caption": "Optimized Client",
+            "optimized_client_message": "Enable caching and disable some unnecessary things under the Client. This option does not cause your connection issues.",
+            "super_potato_caption": "Super Potato Mode",
+            "super_potato_message": "Disable all animations and transitions, also reduce input lag from the Client.",
+            "silent_mode_caption": "Silent Mode",
+            "slient_mode_message": "Suppress all notifications and flashing foreground window when matchmaking found.",
+            "developer_title": "Developer",
+            "developer_tools_caption": "Developer Tools",
+            "developer_tools_message": "Allow you to open Chrome DevTools to debug the UX and plugins.",
+            "insecure_mode_caption": "Insecure Mode",
+            "insecure_mode_message": "Disable all web security features like CORS and CSP.",
+            "riotclient_api_caption": "RiotClient API",
+            "riotclient_api_message": "Allow you to access RiotClient API via 'riotclient' domain.",
+            "allow_proxy_caption": "Allow Proxy",
+            "allow_proxy_message": "Allow the UX requests traffic through network proxy."
+          }
+        }
       }
     },
     {
       "id": "vi",
       "name": "Tiếng Việt",
       "translations": {
-        "welcome": "Xin Chào",
-        "choose_lang": "Chọn ngôn ngữ",
-        "accept_tos": "Tôi đồng với ý các điều khoản",
-        "tos_content": "Pengu Loader an toàn, nhưng sử dụng các plugin khai thác lỗ hổng có thể bị khóa tài khoản.",
-        "get_started": "Bắt Đầu"
+        "welcome": {
+          "welcome": "Chào mừng",
+          "choose_lang": "Chọn ngôn ngữ của bạn",
+          "accept_tos": "Chấp nhận các điều khoản và điều kiện",
+          "tos_content": "Pengu Loader AN TOÀN, nhưng sử dụng các plugin khai thác có thể khiến bạn bị cấm.",
+          "get_started": "Bắt đầu"
+        },
+        "gallery": {
+          "loading": "Đang tải...",
+          "reload": "Tải lại",
+          "installed_plugins": "Các plugin đã cài đặt",
+          "no_plugins": "Chưa cài đặt plugin",
+          "dont_see_plugins": "Không thấy plugin của bạn?",
+          "open_folder": "Mở thư mục",
+          "more_plugins": "Thêm plugin?",
+          "get_in_store": "Nhận trong cửa hàng"
+        },
+        "activator": {
+          "activate": "Kích hoạt",
+          "ready": "Sẵn sàng",
+          "invalid_path": "Vui lòng chọn một thư mục LoL Client hợp lệ trong Cài đặt.",
+          "module_not_found": "Kích hoạt không thành công, không tìm thấy mô-đun lõi.",
+          "error_occur": "Kích hoạt không thành công, gặp lỗi"
+        },
+        "store": {
+          "soon": "Cửa hàng plugin sắp ra mắt!",
+          "go_back": "Quay lại"
+        },
+        "settings": {
+          "title": "Cài đặt",
+          "tabs": {
+            "pengu": "Pengu Loader",
+            "lc": "League Client",
+            "about": "Về"
+          },
+          "pengu": {
+            "launch_settings_title": "Cài đặt khởi chạy",
+            "launch_settings_caption": "Chạy khi khởi động",
+            "launch_settings_message": "Tự động chạy Pengu khi máy tính của bạn khởi động.",
+            "plugins_folder_title": "Thư mục Plugin",
+            "client_location_title": "Vị trí Client LoL",
+            "client_location_invalid": "Đường dẫn bạn chọn không hợp lệ.",
+            "client_location_not_selected": "(chưa chọn)",
+            "activation_mode_title": "Chế độ kích hoạt",
+            "deactivate_message": "Vui lòng hủy kích hoạt Pengu trước khi thay đổi chế độ kích hoạt.",
+            "activation_mode_universal_caption": "Phổ thông",
+            "activation_mode_universal_message": "Áp dụng cho tất cả các Client League, bao gồm bản live và PBE.",
+            "activation_mode_targeted_caption": "Cụ thể",
+            "activation_mode_targeted_message": "Áp dụng cho một Client League cụ thể để tránh lỗi UnauthorizedAccess trên một số Windows.",
+            "activation_mode_ondemand_caption": "Theo yêu cầu",
+            "activation_mode_ondemand_message": "Áp dụng cho một Client League cụ thể mà bạn khởi chạy từ Riot Client. Bạn phải giữ Pengu chạy ở chế độ nền."
+          },
+          "leagueclient": {
+            "restart_to_take_effect": "*Các tùy chọn này hoạt động trong Client, khởi động lại để có hiệu lực.",
+            "hotkeys_title": "Phím tắt",
+            "hotkeys_caption": "Bật phím tắt",
+            "hotkeys_message": "Cho phép Pengu bắt các phím tắt này trong Client để thực hiện các chức năng bên dưới.",
+            "hotkeys_reload_the_client": "Tải lại Client",
+            "hotkeys_restart_the_ux": "Tải lại UX",
+            "hotkey_open_chrome_devtools": "Mở Chrome DevTools",
+            "tweaks_title": "Điều chỉnh",
+            "optimized_client_caption": "Tối ưu hóa Client",
+            "optimized_client_message": "Bật bộ nhớ đệm và tắt một số tính năng không cần thiết trong Client. Tùy chọn này không gây ra vấn đề kết nối của bạn.",
+            "super_potato_caption": "Chế độ Super Potato",
+            "super_potato_message": "Tắt tất cả các hiệu ứng và chuyển tiếp, đồng thời giảm độ trễ đầu vào từ Client.",
+            "silent_mode_caption": "Chế độ yên lặng",
+            "slient_mode_message": "Tắt tất cả thông báo và ngăn cửa sổ nền nhấp nháy khi tìm thấy trận đấu.",
+            "developer_title": "Nhà phát triển",
+            "developer_tools_caption": "Công cụ dành cho nhà phát triển",
+            "developer_tools_message": "Cho phép bạn mở Chrome DevTools để gỡ lỗi UX và các plugin.",
+            "insecure_mode_caption": "Chế độ không an toàn",
+            "insecure_mode_message": "Tắt tất cả các tính năng bảo mật web như CORS và CSP.",
+            "riotclient_api_caption": "RiotClient API",
+            "riotclient_api_message": "Cho phép bạn truy cập RiotClient API qua miền 'riotclient'.",
+            "allow_proxy_caption": "Cho phép Proxy",
+            "allow_proxy_message": "Cho phép lưu lượng yêu cầu UX thông qua proxy mạng."
+          }
+        }
+      }
+    },
+    {
+      "id": "zh-CN",
+      "name": "简体中文",
+      "translations": {
+        "welcome": {
+          "welcome": "欢迎",
+          "choose_lang": "选择你的语言",
+          "accept_tos": "接受条款和条件",
+          "tos_content": "Pengu Loader 是安全的，但使用漏洞插件可能会导致你被封禁。",
+          "get_started": "开始"
+        },
+        "gallery": {
+          "loading": "加载中...",
+          "reload": "重新加载",
+          "installed_plugins": "已安装的插件",
+          "no_plugins": "没有已安装的插件",
+          "dont_see_plugins": "没看到你的插件？",
+          "open_folder": "打开文件夹",
+          "more_plugins": "更多插件？",
+          "get_in_store": "在商店获取"
+        },
+        "activator": {
+          "activate": "启用",
+          "ready": "已激活",
+          "invalid_path": "请选择设置中的有效的 LoL 客户端文件夹",
+          "module_not_found": "激活失败，未找到核心",
+          "error_occur": "激活失败，发生错误"
+        },
+        "store": {
+          "soon": "插件商店即将上线！",
+          "go_back": "返回"
+        },
+        "settings": {
+          "title": "设置",
+          "tabs": {
+            "pengu": "Pengu Loader",
+            "lc": "League Client",
+            "about": "关于"
+          },
+          "pengu": {
+            "launch_settings_title": "启动设置",
+            "launch_settings_caption": "开机自启",
+            "launch_settings_message": "当您的计算机启动时自动运行 Pengu",
+            "plugins_folder_title": "插件文件夹",
+            "client_location_title": "LoL 客户端位置",
+            "client_location_invalid": "您选择的路径无效",
+            "client_location_not_selected": "(未选择)",
+            "activation_mode_title": "激活模式",
+            "deactivate_message": "请在更改激活模式之前停用 Pengu",
+            "activation_mode_universal_caption": "通用",
+            "activation_mode_universal_message": "适用于所有英雄联盟客户端，包括正式版和PBE",
+            "activation_mode_targeted_caption": "定向",
+            "activation_mode_targeted_message": "适用于特定的英雄联盟客户端，避免在某些 Windows 上出现未授权访问问题",
+            "activation_mode_ondemand_caption": "按需",
+            "activation_mode_ondemand_message": "适用于您从 Riot 客户端启动的特定英雄联盟客户端。您需要保持 Pengu 在后台运行"
+          },
+          "leagueclient": {
+            "restart_to_take_effect": "*这些选项在客户端内生效，重新启动后才能生效",
+            "hotkeys_title": "快捷键",
+            "hotkeys_caption": "启用快捷键",
+            "hotkeys_message": "允许Pengu在客户端中捕捉这些快捷键并执行以下功能",
+            "hotkeys_reload_the_client": "重新加载客户端",
+            "hotkeys_restart_the_ux": "重新加载UX",
+            "hotkey_open_chrome_devtools": "打开Chrome开发者工具",
+            "tweaks_title": "调整",
+            "optimized_client_caption": "优化客户端",
+            "optimized_client_message": "启用缓存并禁用一些不必要的功能，此选项不会导致网络连接问题",
+            "super_potato_caption": "超低配模式",
+            "super_potato_message": "禁用所有动画和过渡，并减少客户端的输入延迟",
+            "silent_mode_caption": "安静模式",
+            "slient_mode_message": "禁止客户端将自身强制置顶",
+            "developer_title": "开发者",
+            "developer_tools_caption": "开发者工具",
+            "developer_tools_message": "允许您打开 Chrome 开发者工具以调试客户端和插件",
+            "insecure_mode_caption": "不安全模式",
+            "insecure_mode_message": "禁用所有网络安全功能，例如CORS和CSP",
+            "riotclient_api_caption": "RiotClient API",
+            "riotclient_api_message": "允许通过 https://riotclient 访问RiotClient API",
+            "allow_proxy_caption": "允许代理",
+            "allow_proxy_message": "允许 LeagueClientUX 流量通过系统网络代理"
+          }
+        }
       }
     }
   ]
